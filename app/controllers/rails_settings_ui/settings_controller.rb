@@ -12,15 +12,14 @@ class RailsSettingsUi::SettingsController < RailsSettingsUi::ApplicationControll
     else
       coerced_values.each { |name, value| RailsSettingsUi.settings_klass[name] = value }
       flash[:success] = t('settings.index.settings_saved')
-      redirect_to [:settings]
+      redirect_to settings_path
     end
   end
 
   private
 
   def collection
-    all_settings_without_ignored = all_settings.reject{ |name, _description| RailsSettingsUi.ignored_settings.include?(name.to_sym) }
-    @settings = Hash[all_settings_without_ignored]
+    @settings = all_settings
     @errors = {}
   end
 

@@ -84,6 +84,8 @@ module RailsSettingsUi::SettingsHelper
   end
 
   def all_settings
-    RailsSettingsUi.settings_klass.public_send(get_collection_method)
+    RailsSettingsUi.settings_klass.public_send(get_collection_method).reject do |name, _description|
+      RailsSettingsUi.ignored_settings.include?(name.to_sym)
+    end
   end
 end

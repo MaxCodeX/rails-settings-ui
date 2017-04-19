@@ -42,6 +42,8 @@ module RailsSettingsUi
         RailsSettings::Default.instance.with_indifferent_access
       else
         RailsSettingsUi.settings_klass.defaults
+      end.reject do |name, _description|
+        RailsSettingsUi.ignored_settings.include?(name.to_sym)
       end
     end
   end
